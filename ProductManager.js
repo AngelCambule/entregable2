@@ -9,12 +9,12 @@ class ProductManager {
 
   addProduct(productData) {
     if (!this.isCodeUnique(productData.code)) {
-      console.log("Error: Product code already exists.");
+      console.log("Error: El codigo del producto ya existe.");
       return;
     }
 
     if (!this.areAllFieldsPresent(productData)) {
-      console.log("Error: All fields are mandatory.");
+      console.log("Error: Todos los campos son obligatorios.");
       return;
     }
 
@@ -40,7 +40,7 @@ class ProductManager {
     if (product) {
       return product;
     } else {
-      console.log("Not Found");
+      console.log("No Encontrado");
     }
   }
 
@@ -52,7 +52,7 @@ class ProductManager {
       this.products[index] = { ...product, ...updatedProduct };
       this.saveProductsToFile();
     } else {
-      console.log("Product not found.");
+      console.log("Producto no encontrado");
     }
   }
 
@@ -83,7 +83,6 @@ class ProductManager {
       this.products = JSON.parse(data);
       this.nextId = this.products.reduce((maxId, product) => Math.max(maxId, product.id), 0) + 1;
     } catch (error) {
-      // File not found or invalid JSON, continue with an empty array.
       this.products = [];
     }
   }
@@ -92,7 +91,7 @@ class ProductManager {
     try {
       fs.writeFileSync(this.path, JSON.stringify(this.products), 'utf8');
     } catch (error) {
-      console.error("Error saving products to file:", error);
+      console.error("Error al intentar guardar los productos en el archivo:", error);
     }
   }
 }
@@ -105,7 +104,7 @@ manager.addProduct({
     title: "Producto 1",
     description: "Descripcion 1",
     price: 26,
-    thumbnail: "thumbnail1.png",
+    thumbnail: "img1.png",
     code: "54645",
     stock: 5,
   });
@@ -114,7 +113,7 @@ manager.addProduct({
     title: "Producto 2",
     description: "Descripcion 2",
     price: 26,
-    thumbnail: "thumbnail2.png",
+    thumbnail: "img2.png",
     code: "546455",
     stock: 5,
   });
