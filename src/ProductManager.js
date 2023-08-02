@@ -19,7 +19,7 @@ class ProductManager {
     }
 
     const product = {
-      id: this.nextId,
+      id: this.nextId = this.products.reduce((maxId, product) => Math.max(maxId, product.id), 0) + 1,
       ...productData,
     };
 
@@ -81,7 +81,6 @@ class ProductManager {
     try {
       const data = fs.readFileSync(this.path, 'utf8');
       this.products = JSON.parse(data);
-      this.nextId = this.products.reduce((maxId, product) => Math.max(maxId, product.id), 0) + 1;
     } catch (error) {
       this.products = [];
     }
@@ -89,7 +88,7 @@ class ProductManager {
 
   saveProductsToFile() {
     try {
-      fs.writeFileSync(this.path, JSON.stringify(this.products), 'utf8');
+      fs.writeFileSync(this.path, JSON.stringify(this.products, null, `\t`), 'utf8');
     } catch (error) {
       console.error("Error al intentar guardar los productos en el archivo:", error);
     }
@@ -98,27 +97,4 @@ class ProductManager {
 
 const manager = new ProductManager('products.json');
 
-console.log(manager.getProducts());
-
-manager.addProduct({
-    title: "Producto 1",
-    description: "Descripcion 1",
-    price: 26,
-    thumbnail: "img1.png",
-    code: "54645",
-    stock: 5,
-  });
-
-  manager.addProduct({
-    title: "Producto 2",
-    description: "Descripcion 2",
-    price: 26,
-    thumbnail: "img2.png",
-    code: "546455",
-    stock: 5,
-  });
-console.log(manager.getProductById(1));
-manager.updateProduct(1, { price: 15 });
-console.log(manager.getProductById(2));
-manager.deleteProduct(2);
-console.log(manager.getProducts());
+module.exports = ProductManager;
