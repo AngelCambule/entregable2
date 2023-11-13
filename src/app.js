@@ -24,7 +24,7 @@ app.get('/products/:pid', (req, res) => {
   if (!producto) {
     return res.status(404).json({ error: 'Producto no encontrado' });
   }
-  res.json(producto);
+  res.json(producto)
 });
 
 app.listen(port, () => {

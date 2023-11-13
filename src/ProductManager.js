@@ -7,6 +7,7 @@ class ProductManager {
     this.nextId = 1;
   }
 
+  
   addProduct(productData) {
     if (!this.isCodeUnique(productData.code)) {
       console.log("Error: El codigo del producto ya existe.");
